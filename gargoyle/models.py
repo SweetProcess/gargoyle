@@ -12,7 +12,11 @@ from django.db import models
 from django.utils import six
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-from jsonfield import JSONField
+try:
+    from django.contrib.postgres.fields import JSONField
+except ImportError:
+    from jsonfield import JSONField
+
 
 from .constants import DISABLED, EXCLUDE, GLOBAL, INCLUDE, INHERIT, SELECTIVE
 
@@ -46,7 +50,7 @@ class Switch(models.Model):
     }
 
     key = models.CharField(max_length=64, primary_key=True)
-    value = JSONField()
+    value = JSONField(default={})
     label = models.CharField(max_length=64, null=True)
     date_created = models.DateTimeField(default=now)
     date_modified = models.DateTimeField(auto_now=True)
