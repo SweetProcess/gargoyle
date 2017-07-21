@@ -13,7 +13,7 @@ from django.utils import six
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 try:
-    from django.contrib.postgres.fields import JSONField
+    from jsonfield_compat.fields import JSONField
 except ImportError:
     from jsonfield import JSONField
 

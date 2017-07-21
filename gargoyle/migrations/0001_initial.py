@@ -2,7 +2,7 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 import django.utils.timezone
-from django.contrib.postgres.fields import JSONField
+from jsonfield_compat.fields import JSONField
 from django.db import migrations, models
 
 

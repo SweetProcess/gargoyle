@@ -8,4 +8,7 @@ class GargoyleAppConfig(AppConfig):
     verbose_name = 'Gargoyle'
 
     def ready(self):
+        import jsonfield_compat
         self.module.autodiscover()
+
+        jsonfield_compat.register_app(self)
