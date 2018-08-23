@@ -43,7 +43,7 @@ submodules and Python 2.7, you'll need to ensure your imports are not relative i
 Nexus Frontend
 --------------
 
-While Gargoyle can be used without a frontend, we highly recommend using `Nexus <https://github.com/YPlan/nexus>`_.
+While Gargoyle can be used without a frontend, we highly recommend using `Nexus <https://github.com/adamchainz/nexus>`_.
 
 Nexus will automatically detect Gargoyle's ``NexusModule``, assuming its autodiscovery is on. If not, you will need to
 register the module by hand:
@@ -68,20 +68,28 @@ Default Switch States
 ~~~~~~~~~~~~~~~~~~~~~
 
 The ``GARGOYLE_SWITCH_DEFAULTS`` setting allows engineers to set the default state of a switch before it's been added
-via the gargoyle admin interface. In your ``settings.py`` add something like:
+via the gargoyle admin interface. Set the ``initial_status`` value to set it to a specific switch status - one of
+``DISABLED``, ``SELECTIVE``, ``GLOBAL``, or ``INHERIT``. You can also use the legacy key ``is_active``, with value
+``True`` to make it ``GLOBAL``, and ``False`` to make it ``DISABLED``. For example:
 
 .. code-block:: python
+    from gargoyle.constants import DISABLED, SELECTIVE
 
     GARGOYLE_SWITCH_DEFAULTS = {
         'new_switch': {
-          'is_active': True,
-          'label': 'New Switch',
-          'description': 'When you want the newness',
-        },
-        'funky_switch': {
-          'is_active': False,
+          'initial_status': DISABLED,
           'label': 'Funky Switch',
           'description': 'Controls the funkiness.',
+        },
+        'another_switch': {
+          'initial_status': SELECTIVE,
+          'label': 'Conditional Funky Switch',
+          'description': 'Controls more funkiness.',
+        },
+        'deprecated_format_new_switch': {
+          'is_active': True,
+          'label': 'Old funkiness',
+          'description': 'Defaults on but should really use initial_status=GLOBAL',
         },
     }
 

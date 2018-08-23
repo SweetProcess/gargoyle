@@ -158,7 +158,7 @@ class APITest(TestCase):
             condition_set=condition_set,
             field_name='username',
             condition='bar',
-            exclude=True
+            exclude=True,
         )
 
         user = User(pk=0, username='foo', is_staff=False)
@@ -185,7 +185,7 @@ class APITest(TestCase):
             condition_set=condition_set,
             field_name='username',
             condition='bar',
-            exclude=True
+            exclude=True,
         )
 
         # username=='foo', so should be active
@@ -623,6 +623,8 @@ class APITest(TestCase):
         active_by_default.status = DISABLED
         active_by_default.save()
         assert not self.gargoyle.is_active('active_by_default')
+
+        assert self.gargoyle['selective_by_default'].status == SELECTIVE
 
     def test_invalid_condition(self):
         condition_set = 'gargoyle.builtins.UserConditionSet(auth.user)'

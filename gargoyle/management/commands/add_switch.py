@@ -21,7 +21,7 @@ class Command(BaseCommand):
             key=options['switch_name'],
             defaults={
                 'status': options['status']
-            }
+            },
         )
         if not created and switch.status != options['status']:
             switch.status = options['status']

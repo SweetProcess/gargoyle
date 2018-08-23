@@ -1,6 +1,9 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
 from django.apps import AppConfig
+from django.core import checks
+
+from gargoyle.checks import check_switch_defaults
 
 
 class GargoyleAppConfig(AppConfig):
@@ -9,6 +12,7 @@ class GargoyleAppConfig(AppConfig):
 
     def ready(self):
         import jsonfield_compat
+        checks.register(check_switch_defaults)
         self.module.autodiscover()
 
         jsonfield_compat.register_app(self)

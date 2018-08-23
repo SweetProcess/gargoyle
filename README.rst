@@ -5,8 +5,8 @@ Gargoyle
 .. image:: https://img.shields.io/pypi/v/gargoyle-yplan.svg
     :target: https://pypi.python.org/pypi/gargoyle-yplan
 
-.. image:: https://travis-ci.org/YPlan/gargoyle.svg?branch=master
-    :target: https://travis-ci.org/YPlan/gargoyle
+.. image:: https://travis-ci.org/adamchainz/gargoyle.svg?branch=master
+    :target: https://travis-ci.org/adamchainz/gargoyle
 
 .. image:: https://readthedocs.org/projects/gargoyle-yplan/badge/?version=latest
         :target: https://gargoyle-yplan.readthedocs.io/en/latest/
@@ -23,7 +23,7 @@ Requirements
 Tested with all combinations of:
 
 * Python: 2.7, 3.6
-* Django: 1.8, 1.9, 1.10, 1.11
+* Django: 1.8, 1.9, 1.10, 1.11, 2.0
 
 Install
 -------

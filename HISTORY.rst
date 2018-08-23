@@ -7,8 +7,18 @@ History
 Pending Release
 ---------------
 
-* New release notes here
+.. Add new release notes below this line.
+
+1.4.0 (2018-08-05)
+------------------
+
+* Added ``initial_status`` option to ``GARGOYLE_SWITCH_DEFAULTS``
+
+1.3.0 (2017-10-28)
+------------------
+
 * Added missing argument message and documents for management commands
+* Django 2.0b1 support
 
 1.2.7 (2016-12-01)
 ------------------

@@ -80,6 +80,8 @@ class Switch(models.Model):
                     kwargs['status'] = GLOBAL
                 elif is_active is False:
                     kwargs['status'] = DISABLED
+                elif switch_default.get('initial_status') in self.STATUS_LABELS:
+                    kwargs['status'] = switch_default['initial_status']
                 if not kwargs.get('label'):
                     kwargs['label'] = switch_default.get('label')
                 if not kwargs.get('description'):
@@ -111,7 +113,7 @@ class Switch(models.Model):
                 last = {
                     'id': condition_set_id,
                     'label': group,
-                    'conditions': []
+                    'conditions': [],
                 }
 
             last['conditions'].append((field.name, value, field.display(value), exclude))

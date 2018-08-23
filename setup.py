@@ -27,9 +27,9 @@ setup(
     version=version,
     author='DISQUS',
     author_email='opensource@disqus.com',
-    maintainer='YPlan',
-    maintainer_email='adam@yplanapp.com',
-    url='https://github.com/YPlan/gargoyle',
+    maintainer='Adam Johnson',
+    maintainer_email='me@adamj.eu',
+    url='https://github.com/adamchainz/gargoyle',
     description=(
         'Gargoyle is a platform built on top of Django which allows you to switch functionality of your application '
         'on and off based on conditions.'
@@ -39,14 +39,15 @@ setup(
     zip_safe=False,
     install_requires=[
         'django-modeldict-yplan>=1.5.0',
-        'nexus-yplan>=1.2.0',
+        'nexus-yplan>=1.6.0',
         'django-jsonfield>=0.9.2,!=0.9.13,!=1.0.0',
         'django-jsonfield-compat==0.4.4'
     ],
+    python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*',
     extras_require={
         ':python_version=="2.7"': [
             'contextdecorator',
-        ]
+        ],
     },
     license='Apache License 2.0',
     include_package_data=True,
@@ -57,6 +58,7 @@ setup(
         'Framework :: Django :: 1.9',
         'Framework :: Django :: 1.10',
         'Framework :: Django :: 1.11',
+        'Framework :: Django :: 2.0',
         'Intended Audience :: Developers',
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: Apache Software License',
@@ -69,6 +71,6 @@ setup(
         'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python',
-        'Topic :: Software Development'
+        'Topic :: Software Development',
     ],
 )
