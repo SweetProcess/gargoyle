@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # Gargoyle documentation build configuration file, created by
 # sphinx-quickstart on Fri May  6 11:47:36 2011.

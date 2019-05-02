@@ -1,9 +1,4 @@
-# -*- coding:utf-8 -*-
-from __future__ import absolute_import, division, print_function, unicode_literals
-
 import os
-
-import django
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
@@ -37,7 +32,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
 )
 
-middlewares = (
+MIDDLEWARE = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -45,11 +40,6 @@ middlewares = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
-
-if django.VERSION >= (1, 10):
-    MIDDLEWARE = middlewares
-else:
-    MIDDLEWARE_CLASSES = middlewares
 
 ROOT_URLCONF = 'urls'
 LANGUAGE_CODE = 'en-us'

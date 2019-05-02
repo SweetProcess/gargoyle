@@ -10,14 +10,12 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.views.generic.base import RedirectView
 
-from gargoyle.compat import subinclude
-
 admin.autodiscover()
 nexus.autodiscover()
 
 urlpatterns = [
     url(r'^nexus/', include(nexus.site.urls)),
-    url(r'^admin/', subinclude(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^foo/$', lambda request: HttpResponse(), name='gargoyle_test_foo'),
-    url(r'^/?$', RedirectView.as_view(url='/nexus/', permanent=False)),
+    url(r'^$', RedirectView.as_view(url='/nexus/', permanent=False)),
 ]

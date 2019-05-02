@@ -10,10 +10,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import inspect
 import sys
 import unittest
+from contextlib import ContextDecorator
 
 from gargoyle import gargoyle
-
-from .compat import ContextDecorator
 
 
 class TestCaseContextDecorator(ContextDecorator):

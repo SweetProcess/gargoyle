@@ -9,7 +9,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from django.conf import settings
 from django.db import models
-from django.utils import six
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 try:
@@ -122,6 +121,14 @@ class Switch(models.Model):
 
         return data
 
+    def can_add_condition(self, namespace, field_name, condition):
+        if namespace not in self.value:
+            self.value[namespace] = {}
+        if field_name not in self.value[namespace]:
+            self.value[namespace][field_name] = []
+        conditions = [c for _, c in self.value[namespace][field_name]]
+        return condition not in conditions
+
     def add_condition(self, manager, condition_set, field_name, condition, exclude=False, commit=True):
         """
         Adds a new condition and registers it in the global ``gargoyle`` switch manager.
@@ -134,15 +141,11 @@ class Switch(models.Model):
         """
         condition_set = manager.get_condition_set_by_id(condition_set)
 
-        assert isinstance(condition, six.string_types), 'conditions must be strings'
+        assert isinstance(condition, str), 'conditions must be strings'
 
         namespace = condition_set.get_namespace()
 
-        if namespace not in self.value:
-            self.value[namespace] = {}
-        if field_name not in self.value[namespace]:
-            self.value[namespace][field_name] = []
-        if condition not in self.value[namespace][field_name]:
+        if self.can_add_condition(namespace, field_name, condition):
             self.value[namespace][field_name].append((exclude and EXCLUDE or INCLUDE, condition))
 
         if commit:
@@ -226,7 +229,7 @@ class Switch(models.Model):
             condition_set_id = condition_set.get_id()
             if ns in self.value:
                 group = condition_set.get_group_label()
-                for name, field in six.iteritems(condition_set.fields):
+                for name, field in condition_set.fields.items():
                     for value in self.value[ns].get(name, []):
                         try:
                             yield condition_set_id, group, field, value[1], value[0] == EXCLUDE

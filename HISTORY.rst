@@ -9,6 +9,23 @@ Pending Release
 
 .. Add new release notes below this line.
 
+2.1.0 (2019-04-28)
+------------------
+
+* Drop Django 1.8, 1.9, and 1.10 support. Only Django 1.11+ is supported now.
+* Depend on `nexus-yplan >= 2.1.0` which also dropped old Django support.
+* Tested on Django 2.2. No changes were needed for compatibility.
+
+2.0.0 (2019-03-03)
+------------------
+
+* Drop Python 2 support, only Python 3.4+ is supported now.
+
+1.5.0 (2018-12-29)
+------------------
+
+* Added protection against conflicting conditions being added to a switch.
+
 1.4.0 (2018-08-05)
 ------------------
 

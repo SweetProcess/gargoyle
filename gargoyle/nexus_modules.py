@@ -14,7 +14,6 @@ import nexus
 from django.conf import settings
 from django.conf.urls import url
 from django.http import HttpResponse, HttpResponseNotFound
-from django.utils import six
 
 from gargoyle import gargoyle, signals
 from gargoyle.conditions import ValidationError
@@ -55,7 +54,7 @@ def json_view(func):
         except ValidationError as e:
             response = {
                 "success": False,
-                "data": u','.join(map(six.text_type, e.messages)),
+                "data": u','.join(map(str, e.messages)),
             }
         except Exception:
             if settings.DEBUG:
@@ -167,7 +166,7 @@ class GargoyleModule(nexus.NexusModule):
         )
 
         changes = {}
-        for attribute, value in six.iteritems(values):
+        for attribute, value in values.items():
             new_value = getattr(switch, attribute)
             if new_value != value:
                 changes[attribute] = (value, new_value)
@@ -182,7 +181,7 @@ class GargoyleModule(nexus.NexusModule):
             switch.save()
 
             logger.info('Switch %r updated %%s' % switch.key,
-                        ', '.join('%s=%r->%r' % (k, v[0], v[1]) for k, v in sorted(six.iteritems(changes))))
+                        ', '.join('%s=%r->%r' % (k, v[0], v[1]) for k, v in sorted(changes.items())))
 
             signals.switch_updated.send(
                 sender=self,
@@ -247,10 +246,16 @@ class GargoyleModule(nexus.NexusModule):
         if not all([key, condition_set_id, field_name]):
             raise GargoyleException("Fields cannot be empty")
 
-        field = gargoyle.get_condition_set_by_id(condition_set_id).fields[field_name]
+        condition_set = gargoyle.get_condition_set_by_id(condition_set_id)
+        namespace = condition_set.get_namespace()
+        field = condition_set.fields[field_name]
         value = field.validate(request.POST)
 
         switch = gargoyle[key]
+
+        if not switch.can_add_condition(namespace, field_name, value):
+            raise GargoyleException("Conditions cannot conflict with or duplicate existing conditions")
+
         switch.add_condition(condition_set_id, field_name, value, exclude=exclude)
 
         logger.info('Condition added to %r (%r, %s=%r, exclude=%r)' % (switch.key,
