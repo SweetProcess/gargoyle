@@ -37,11 +37,9 @@ setup(
     packages=find_packages(exclude=['tests', 'tests.*']),
     zip_safe=False,
     install_requires=[
-        'Django>=1.11',
+        'Django>=2.1',
         'django-modeldict-yplan>=2.0.0',
         'nexus-yplan>=2.1.0',
-        'django-jsonfield>=1.2.0',
-        'django-jsonfield-compat==0.4.4'
     ],
     python_requires='>=3.4',
     license='Apache License 2.0',

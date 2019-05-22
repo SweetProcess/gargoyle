@@ -11,10 +11,7 @@ from django.conf import settings
 from django.db import models
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-try:
-    from jsonfield_compat.fields import JSONField
-except ImportError:
-    from jsonfield import JSONField
+from django.contrib.postgres.fields import JSONField
 
 
 from .constants import DISABLED, EXCLUDE, GLOBAL, INCLUDE, INHERIT, SELECTIVE

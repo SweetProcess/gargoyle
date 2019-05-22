@@ -1,6 +1,6 @@
 import django.utils.timezone
-from jsonfield_compat.fields import JSONField
 from django.db import migrations, models
+from django.contrib.postgres.fields import JSONField
 
 
 class Migration(migrations.Migration):

@@ -9,6 +9,11 @@ Pending Release
 
 .. Add new release notes below this line.
 
+2.1.2 (2019-05-21)
+------------------
+
+* Replaces references to jsonfield_compat with Django's own JSONField
+
 2.1.1 (2019-05-17)
 ------------------
 
