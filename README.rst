@@ -11,6 +11,14 @@ Gargoyle
 .. image:: https://readthedocs.org/projects/gargoyle-yplan/badge/?version=latest
         :target: https://gargoyle-yplan.readthedocs.io/en/latest/
 
+**Retired: this project is no longer maintained.** I (Adam Johnson) no longer
+have time to continue maintaining this. I was doing so since I took on this
+project, and its related packages
+`django-modeldict <https://github.com/adamchainz/django-modeldict>`__ and
+`nexus <https://github.com/adamchainz/nexus>`__, for my ex-employer YPlan. If
+you'd like to sponsor ongoing maintenance or take it over yourself, please
+contact me@adamj.eu.
+
 Gargoyle is a platform built on top of Django which allows you to switch functionality of your application on and off
 based on conditions.
 
