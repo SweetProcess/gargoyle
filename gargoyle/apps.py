@@ -7,12 +7,9 @@ from gargoyle.checks import check_switch_defaults
 
 
 class GargoyleAppConfig(AppConfig):
-    name = 'gargoyle'
-    verbose_name = 'Gargoyle'
+    name = "gargoyle"
+    verbose_name = "Gargoyle"
 
     def ready(self):
-        import jsonfield_compat
         checks.register(check_switch_defaults)
         self.module.autodiscover()
-
-        jsonfield_compat.register_app(self)

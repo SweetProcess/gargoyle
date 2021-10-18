@@ -39,8 +39,6 @@ setup(
     install_requires=[
         "django-modeldict-yplan>=1.5.0",
         "nexus-yplan>=1.6.0",
-        "django-jsonfield>=0.9.2,!=0.9.13,!=1.0.0",
-        "django-jsonfield-compat==0.4.4",
     ],
     python_requires=">=3.4",
     license="Apache License 2.0",
