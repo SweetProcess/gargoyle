@@ -12,7 +12,7 @@ from functools import wraps
 
 import nexus
 from django.conf import settings
-from django.conf.urls import url
+from django.urls import path
 from django.http import HttpResponse, HttpResponseNotFound
 
 from gargoyle import gargoyle, signals
@@ -75,13 +75,13 @@ class GargoyleModule(nexus.NexusModule):
 
     def get_urls(self):
         return [
-            url(r'^add/$', self.as_view(self.add), name='add'),
-            url(r'^update/$', self.as_view(self.update), name='update'),
-            url(r'^delete/$', self.as_view(self.delete), name='delete'),
-            url(r'^status/$', self.as_view(self.status), name='status'),
-            url(r'^conditions/add/$', self.as_view(self.add_condition), name='add-condition'),
-            url(r'^conditions/remove/$', self.as_view(self.remove_condition), name='remove-condition'),
-            url(r'^$', self.as_view(self.index), name='index'),
+            path('add/', self.as_view(self.add), name='add'),
+            path('update/', self.as_view(self.update), name='update'),
+            path('delete/', self.as_view(self.delete), name='delete'),
+            path('status/', self.as_view(self.status), name='status'),
+            path('conditions/add/', self.as_view(self.add_condition), name='add-condition'),
+            path('conditions/remove/', self.as_view(self.remove_condition), name='remove-condition'),
+            path('', self.as_view(self.index), name='index'),
         ]
 
     def render_on_dashboard(self, request):

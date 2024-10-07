@@ -10,9 +10,9 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 from functools import wraps
 
 from django.http import Http404, HttpResponseRedirect
+from django.urls import reverse
 
 from gargoyle import gargoyle
-from gargoyle.compat import reverse
 
 
 def switch_is_active(key, redirect_to=None, gargoyle=gargoyle):
