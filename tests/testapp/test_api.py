@@ -6,7 +6,6 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import datetime
 
-import pytest
 from django.contrib.auth.models import AnonymousUser, User
 from django.core.cache import cache
 from django.http import Http404, HttpResponse
@@ -262,13 +261,13 @@ class APITest(TestCase):
 
         request = self.request_factory.get('/', user=self.user)
 
-        with pytest.raises(Http404):
+        with self.assertRaises(Http404):
             test(request)
 
         switch.status = SELECTIVE
         switch.save()
 
-        with pytest.raises(Http404):
+        with self.assertRaises(Http404):
             test(request)
 
         switch.add_condition(
@@ -291,7 +290,7 @@ class APITest(TestCase):
 
         request = self.request_factory.get('/', REMOTE_ADDR='192.168.1.1')
 
-        with pytest.raises(Http404):
+        with self.assertRaises(Http404):
             test(request)
 
         switch.status = SELECTIVE
@@ -319,7 +318,7 @@ class APITest(TestCase):
             condition='192.168.1.1',
         )
 
-        with pytest.raises(Http404):
+        with self.assertRaises(Http404):
             test(request)
 
         switch.add_condition(
@@ -353,7 +352,7 @@ class APITest(TestCase):
             condition='0-50',
         )
 
-        with pytest.raises(Http404):
+        with self.assertRaises(Http404):
             test(request)
 
     def test_decorator_with_redirect(self):
