@@ -2,8 +2,8 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 import datetime
 import socket
+from zoneinfo import ZoneInfo
 
-import pytz
 from django.test import RequestFactory, TestCase
 from django.test.utils import override_settings
 from django.utils import timezone
@@ -131,8 +131,8 @@ class UTCTodayConditionSetTests(TestCase):
         """
         self.condition_set = UTCTodayConditionSet()
         self.server_dt = datetime.datetime(2016, 1, 1, 0, 0, 0)
-        self.server_tz = pytz.timezone('America/Chicago')
-        self.server_dt_aware = self.server_tz.localize(self.server_dt)
+        self.server_tz = ZoneInfo('America/Chicago')
+        self.server_dt_aware = self.server_dt.astimezone(self.server_tz)
         self.server_tz_offset = -6
         self.utc_dt = self.server_dt - datetime.timedelta(hours=self.server_tz_offset)
 
@@ -172,8 +172,8 @@ class AppTodayConditionSetTests(TestCase):
         """
         self.condition_set = AppTodayConditionSet()
         self.server_dt = datetime.datetime(2016, 1, 1, 0, 0, 0)
-        self.server_tz = pytz.timezone('America/Chicago')
-        self.server_dt_aware = self.server_tz.localize(self.server_dt)
+        self.server_tz = ZoneInfo('America/Chicago')
+        self.server_dt_aware = self.server_dt.astimezone(self.server_tz)
         self.server_tz_offset = -6
         self.app_to_server_tz_offset = datetime.timedelta(hours=1)
 
@@ -219,8 +219,8 @@ class ActiveTimezoneTodayConditionSetTests(TestCase):
         """
         self.condition_set = ActiveTimezoneTodayConditionSet()
         self.server_dt = datetime.datetime(2016, 1, 1, 0, 0, 0)
-        self.server_tz = pytz.timezone('America/Chicago')
-        self.server_dt_aware = self.server_tz.localize(self.server_dt)
+        self.server_tz = ZoneInfo('America/Chicago')
+        self.server_dt_aware = self.server_dt.astimezone(self.server_tz)
         self.server_tz_offset = -6
         self.app_to_server_tz_offset = datetime.timedelta(hours=1)
         self.active_to_server_tz_offset = datetime.timedelta(hours=9)
