@@ -130,35 +130,49 @@ class UTCTodayConditionSetTests(TestCase):
         - then it is 2016-01-01T00:00:00 at server
         """
         self.condition_set = UTCTodayConditionSet()
-        self.server_dt = datetime.datetime(2016, 1, 1, 0, 0, 0)
         self.server_tz = ZoneInfo('America/Chicago')
-        self.server_dt_aware = self.server_dt.astimezone(self.server_tz)
+
+        self.server_dt = datetime.datetime(2016, 1, 1, 0, 0, 0)
+        self.server_dt_aware = self.server_dt.replace(tzinfo=self.server_tz)
+
         self.server_tz_offset = -6
         self.utc_dt = self.server_dt - datetime.timedelta(hours=self.server_tz_offset)
 
     @override_settings(USE_TZ=True, TIME_ZONE="America/New_York")
     @timezone.override('Europe/Moscow')
     def test_use_tz_with_active(self):
-        with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert self.condition_set.get_field_value(None, 'now_is_on_or_after') == self.utc_dt
+        with (freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset)):
+            self.assertEqual(
+                self.condition_set.get_field_value(None,'now_is_on_or_after'),
+                self.utc_dt
+            )
 
     @override_settings(USE_TZ=True, TIME_ZONE="America/New_York")
     @timezone.override(None)
     def test_use_tz_no_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert self.condition_set.get_field_value(None, 'now_is_on_or_after') == self.utc_dt
+            self.assertEqual(
+                self.condition_set.get_field_value(None, 'now_is_on_or_after'),
+                self.utc_dt
+            )
 
     @override_settings(USE_TZ=False, TIME_ZONE=None)
     @timezone.override('Europe/Moscow')
     def test_no_use_tz_with_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert self.condition_set.get_field_value(None, 'now_is_on_or_after') == self.utc_dt
+            self.assertEqual(
+                self.condition_set.get_field_value(None, 'now_is_on_or_after'),
+                self.utc_dt
+            )
 
     @override_settings(USE_TZ=False, TIME_ZONE=None)
     @timezone.override(None)
     def test_no_use_tz_without_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert self.condition_set.get_field_value(None, 'now_is_on_or_after') == self.utc_dt
+            self.assertEqual(
+                self.condition_set.get_field_value(None, 'now_is_on_or_after'),
+                self.utc_dt
+            )
 
 
 class AppTodayConditionSetTests(TestCase):
@@ -173,16 +187,16 @@ class AppTodayConditionSetTests(TestCase):
         self.condition_set = AppTodayConditionSet()
         self.server_dt = datetime.datetime(2016, 1, 1, 0, 0, 0)
         self.server_tz = ZoneInfo('America/Chicago')
-        self.server_dt_aware = self.server_dt.astimezone(self.server_tz)
+        self.server_dt_aware = self.server_dt.replace(tzinfo=self.server_tz)
         self.server_tz_offset = -6
-        self.app_to_server_tz_offset = datetime.timedelta(hours=1)
+        self.app_to_server_tz_offset = datetime.timedelta(hours=-5)
 
     @override_settings(USE_TZ=True, TIME_ZONE="America/New_York")
     @timezone.override('Europe/Moscow')
     def test_use_tz_with_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert (
-                self.condition_set.get_field_value(None, 'now_is_on_or_after') ==
+            self.assertEqual(
+                self.condition_set.get_field_value(None, 'now_is_on_or_after'),
                 self.server_dt + self.app_to_server_tz_offset
             )
 
@@ -190,8 +204,8 @@ class AppTodayConditionSetTests(TestCase):
     @timezone.override(None)
     def test_use_tz_no_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert (
-                self.condition_set.get_field_value(None, 'now_is_on_or_after') ==
+            self.assertEqual(
+                self.condition_set.get_field_value(None, 'now_is_on_or_after'),
                 self.server_dt + self.app_to_server_tz_offset
             )
 
@@ -199,13 +213,20 @@ class AppTodayConditionSetTests(TestCase):
     @timezone.override('Europe/Moscow')
     def test_no_use_tz_with_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert self.condition_set.get_field_value(None, 'now_is_on_or_after') == self.server_dt
+            self.assertEqual(
+                self.condition_set.get_field_value(None,'now_is_on_or_after'),
+                self.server_dt
+            )
+
 
     @override_settings(USE_TZ=False, TIME_ZONE=None)
     @timezone.override(None)
     def test_no_use_tz_without_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert self.condition_set.get_field_value(None, 'now_is_on_or_after') == self.server_dt
+            self.assertEqual(
+                self.condition_set.get_field_value(None, 'now_is_on_or_after'),
+                self.server_dt
+            )
 
 
 class ActiveTimezoneTodayConditionSetTests(TestCase):
@@ -220,37 +241,49 @@ class ActiveTimezoneTodayConditionSetTests(TestCase):
         self.condition_set = ActiveTimezoneTodayConditionSet()
         self.server_dt = datetime.datetime(2016, 1, 1, 0, 0, 0)
         self.server_tz = ZoneInfo('America/Chicago')
-        self.server_dt_aware = self.server_dt.astimezone(self.server_tz)
+        self.server_dt_aware = self.server_dt.replace(tzinfo=self.server_tz)
         self.server_tz_offset = -6
-        self.app_to_server_tz_offset = datetime.timedelta(hours=1)
-        self.active_to_server_tz_offset = datetime.timedelta(hours=9)
+        # In tests this value is self.server_dt + self.app_to_server_tz_offset,
+        # which is comparing time-unaware time with time-aware time.
+        self.app_to_server_tz_offset = datetime.timedelta(hours=-5)
+        # In tests this value is self.server_dt + self.active_to_server_tz_offset,
+        # which is comparing time-unaware time with time-aware time.
+        self.active_to_server_tz_offset = datetime.timedelta(hours=3)
 
     @override_settings(USE_TZ=True, TIME_ZONE="America/New_York")
     @timezone.override('Europe/Moscow')
     def test_use_tz_with_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert (
-                self.condition_set.get_field_value(None, 'now_is_on_or_after') ==
+            self.assertEqual(
+                self.condition_set.get_field_value(None, 'now_is_on_or_after'),
                 self.server_dt + self.active_to_server_tz_offset
             )
 
     @override_settings(USE_TZ=True, TIME_ZONE="America/New_York")
     @timezone.override(None)
     def test_use_tz_no_active(self):
+        # current Timezone set to None, which means that timezone.now() will return
+        # datetime.datetime(2016, 1, 1, 0, 0, 0, UTC-5) (America/New_York)
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert (
-                self.condition_set.get_field_value(None, 'now_is_on_or_after') ==
+            self.assertEqual(
+                self.condition_set.get_field_value(None, 'now_is_on_or_after'),
                 self.server_dt + self.app_to_server_tz_offset
             )
 
     @override_settings(USE_TZ=False, TIME_ZONE=None)
-    @timezone.override('Europe/Moscow')
     def test_no_use_tz_with_active(self):
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert self.condition_set.get_field_value(None, 'now_is_on_or_after') == self.server_dt
+            self.assertEqual(
+                self.condition_set.get_field_value(None,'now_is_on_or_after'),
+                self.server_dt
+            )
 
     @override_settings(USE_TZ=False, TIME_ZONE=None)
     @timezone.override(None)
     def test_no_use_tz_without_active(self):
+        self.server_tz = ZoneInfo('UTC')
         with freeze_time(self.server_dt_aware, tz_offset=self.server_tz_offset):
-            assert self.condition_set.get_field_value(None, 'now_is_on_or_after') == self.server_dt
+            self.assertEqual(
+                self.condition_set.get_field_value(None,'now_is_on_or_after'),
+                self.server_dt
+            )
