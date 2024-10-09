@@ -8,7 +8,7 @@ from gargoyle.models import Switch
 
 class ConstantTest(TestCase):
     def setUp(self):
-        self.gargoyle = SwitchManager(Switch, key='key', value='value', instances=True)
+        self.gargoyle = SwitchManager(Switch, key="key", value="value", instances=True)
 
     def test_disabled(self):
         assert self.gargoyle.DISABLED == 1
@@ -20,7 +20,7 @@ class ConstantTest(TestCase):
         assert self.gargoyle.GLOBAL == 3
 
     def test_include(self):
-        assert self.gargoyle.INCLUDE == 'i'
+        assert self.gargoyle.INCLUDE == "i"
 
     def test_exclude(self):
-        assert self.gargoyle.EXCLUDE == 'e'
+        assert self.gargoyle.EXCLUDE == "e"

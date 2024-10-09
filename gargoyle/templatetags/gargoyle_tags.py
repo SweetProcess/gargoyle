@@ -17,16 +17,18 @@ register = template.Library()
 def switch(parser, token):
     bits = token.split_contents()
     if len(bits) < 2:
-        raise template.TemplateSyntaxError("%r tag requires an argument" % token.contents.split()[0])
+        raise template.TemplateSyntaxError(
+            "%r tag requires an argument" % token.contents.split()[0]
+        )
 
     name = bits[1]
     instances = bits[2:]
-    endtag = 'end{tag}'.format(tag=bits[0])
+    endtag = "end{tag}".format(tag=bits[0])
 
-    nodelist_true = parser.parse(('else', endtag))
+    nodelist_true = parser.parse(("else", endtag))
     token = parser.next_token()
 
-    if token.contents == 'else':
+    if token.contents == "else":
         nodelist_false = parser.parse((endtag,))
         parser.delete_first_token()
     else:
@@ -58,8 +60,8 @@ class SwitchNode(template.Node):
 
     def render(self, context):
         instances = [i.resolve(context) for i in self.instances]
-        if 'request' in context:
-            instances.append(context['request'])
+        if "request" in context:
+            instances.append(context["request"])
 
         if not gargoyle.is_active(self.name, *instances):
             return self.nodelist_false.render(context)
