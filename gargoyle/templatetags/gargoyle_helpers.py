@@ -19,17 +19,17 @@ def render_field(field, value=None):
 
 @register.filter
 def sort_by_key(field, currently):
-    is_negative = currently.find('-') == 0
-    current_field = currently.lstrip('-')
+    is_negative = currently.find("-") == 0
+    current_field = currently.lstrip("-")
 
     if current_field == field and is_negative:
         return field
     elif current_field == field:
-        return '-' + field
+        return "-" + field
     else:
         return field
 
 
 @register.filter
 def sort_field(sort_string):
-    return sort_string.lstrip('-')
+    return sort_string.lstrip("-")

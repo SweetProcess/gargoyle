@@ -21,11 +21,13 @@ def switch_is_active(key, redirect_to=None, gargoyle=gargoyle):
         def wrapped(request, *args, **kwargs):
             if not gargoyle.is_active(key, request):
                 if not redirect_to:
-                    raise Http404('Switch \'%s\' is not active' % key)
-                elif redirect_to.startswith('/'):
+                    raise Http404("Switch '%s' is not active" % key)
+                elif redirect_to.startswith("/"):
                     return HttpResponseRedirect(redirect_to)
                 else:
                     return HttpResponseRedirect(reverse(redirect_to))
             return func(request, *args, **kwargs)
+
         return wrapped
+
     return _switch_is_active
