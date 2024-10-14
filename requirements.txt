@@ -1,4 +1,4 @@
 django-modeldict-yplan==2.0.3
 freezegun==0.3.15
--e git+ssh://git@github.com/sweetprocess/nexus.git@fb9ce3d71fe5e32c757019acad3883e8145f062f#egg=nexus-yplan
+-e git+ssh://git@github.com/sweetprocess/nexus.git@9be204d32e7ae5eb075b5700c1c7d6dca50500f3#egg=nexus-yplan
 django>=4.0
